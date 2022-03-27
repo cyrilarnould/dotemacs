@@ -156,4 +156,3 @@
 (require 'lsp-mode)
 (add-hook 'vhdl-mode-hook #'lsp)
 (setq lsp-headerline-breadcrumb-enable nil)
-(setq lsp-vhdl-server 'hdl-checker)
