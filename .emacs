@@ -76,7 +76,10 @@
 ;; disable image mode for PGM
 (add-to-list 'auto-mode-alist '("\\.pgm\\'" . text-mode))
 
-;; Loat octave-mode for Matlab files
+;; Enable auto-complete in python
+(add-hook 'python-mode-hook 'auto-complete-mode)
+
+;; Load octave-mode for Matlab files
 (setq auto-mode-alist
       (cons
        '("\\.m$" . octave-mode)
@@ -147,7 +150,7 @@
   (add-hook 'after-init-hook #'global-flycheck-mode)
   (add-hook 'nxml-mode-hook  (lambda () (flycheck-mode -1))) ;; Disable in xml mode
 
-;; format-all to beautify code automatically when saving xml
+;; format-all to beautify code
 (require 'format-all)
 (define-key nxml-mode-map "\C-c\C-b" 'format-all-buffer)
 (define-key html-mode-map "\C-c\C-b" 'format-all-buffer)
