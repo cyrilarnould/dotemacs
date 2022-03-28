@@ -10,8 +10,7 @@
  '(cua-mode t nil (cua-base))
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
- '(lsp-keymap-prefix "C-l")
- '(package-selected-packages '(lsp-mode format-all tabbar vlf flycheck))
+ '(package-selected-packages '(yaml-mode format-all lsp-mode tabbar vlf flycheck))
  '(size-indication-mode t)
  '(tab-always-indent nil)
  '(tab-width 2)
@@ -33,6 +32,9 @@
 
 ;; start server
 (server-start)
+
+;;Increase the amount of data which Emacs reads from the process (for better lsp-mode performance)
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
 
  ;; show path
 (setq frame-title-format
@@ -156,6 +158,8 @@
 (define-key html-mode-map "\C-c\C-b" 'format-all-buffer)
 
 ;; lsp mode
+(setq lsp-use-plists t)
+(setq lsp-keymap-prefix "C-l")
 (require 'lsp-mode)
 (add-hook 'vhdl-mode-hook #'lsp)
 (setq lsp-headerline-breadcrumb-enable nil)
