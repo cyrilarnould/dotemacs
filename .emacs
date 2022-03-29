@@ -8,6 +8,7 @@
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(cua-mode t nil (cua-base))
+ '(grep-use-null-device nil)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(package-selected-packages '(yaml-mode format-all lsp-mode tabbar vlf flycheck))
