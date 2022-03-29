@@ -162,5 +162,6 @@
 (setq lsp-use-plists t)
 (setq lsp-keymap-prefix "C-l")
 (require 'lsp-mode)
-(add-hook 'vhdl-mode-hook #'lsp)
+(add-hook 'vhdl-mode-hook
+          (lambda () (local-set-key (kbd "C-c C-l") #'lsp)))
 (setq lsp-headerline-breadcrumb-enable nil)
