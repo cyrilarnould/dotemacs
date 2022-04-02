@@ -11,6 +11,9 @@
  '(grep-use-null-device nil)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
+ '(native-comp-always-compile t)
+ '(native-comp-async-jobs-number 8)
+ '(native-comp-speed 3)
  '(package-selected-packages '(yaml-mode format-all lsp-mode tabbar vlf flycheck))
  '(size-indication-mode t)
  '(tab-always-indent nil)
@@ -127,11 +130,25 @@
 ;;; MELPA packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'package)
-(add-to-list 'package-archives
-             '("MELPA Stable" . "https://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("MELPA" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("MELPA Stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives '("MELPA"        . "https://melpa.org/packages/"))
+(setq package-archive-priorities
+      '(("gnu"     . 666)
+        ("nongnu"  . 420)
+        ("MELPA Stable" . 69)
+        ("MELPA"        . 42)))
 (package-initialize)
+
+;; Automatically install packages if one of them is missing
+(unless (and
+         (require 'tabbar nil 'noerror)
+         (require 'vlf nil 'noerror)
+         (require 'yaml-mode nil 'noerror)
+         (require 'flycheck nil 'noerror)
+         (require 'format-all nil 'noerror)
+         (require 'lsp-mode nil 'noerror))
+  (package-refresh-contents)
+  (package-install-selected-packages))
 
 ;; Tabbar
 (require 'tabbar)
