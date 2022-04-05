@@ -13,14 +13,16 @@
  '(inhibit-startup-screen t)
  '(native-comp-always-compile t)
  '(native-comp-async-jobs-number 8)
+ '(native-comp-async-query-on-exit t)
  '(native-comp-speed 3)
+ '(package-native-compile t)
  '(package-selected-packages '(yaml-mode format-all lsp-mode tabbar vlf flycheck))
  '(size-indication-mode t)
  '(tab-always-indent nil)
  '(tab-width 2)
  '(tool-bar-mode nil)
  '(user-full-name "Cyril Arnould")
- '(user-mail-address "arnould@photonfocus.com")
+ '(user-mail-address "cyril.arnould@outlook.com")
  '(vhdl-clock-edge-condition 'function)
  '(vhdl-compiler "GHDL")
  '(vhdl-electric-mode t)
@@ -74,11 +76,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Mode related changes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; VHDL mode
-(require 'vhdl-mode)
-(autoload 'vhdl-mode "vhdl-mode" "VHDL Mode" t)
-(setq auto-mode-alist (cons '("\\.vhdl?\\'" . vhdl-mode) auto-mode-alist))
-
 ;; disable image mode for PGM
 (add-to-list 'auto-mode-alist '("\\.pgm\\'" . text-mode))
 
@@ -130,13 +127,13 @@
 ;;; MELPA packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'package)
-(add-to-list 'package-archives '("MELPA Stable" . "https://stable.melpa.org/packages/"))
 (add-to-list 'package-archives '("MELPA"        . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("MELPA Stable" . "https://stable.melpa.org/packages/"))
 (setq package-archive-priorities
       '(("gnu"     . 666)
         ("nongnu"  . 420)
-        ("MELPA Stable" . 69)
-        ("MELPA"        . 42)))
+        ("MELPA"        . 69)
+        ("MELPA Stable" . 42)))
 (package-initialize)
 
 ;; Automatically install packages if one of them is missing
