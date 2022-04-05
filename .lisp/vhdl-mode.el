@@ -10683,9 +10683,8 @@ Include a library specification, if not already there."
 	 (replace-match "" t t)
 	 (vhdl-template-insert-date))
        (goto-char beg)
-       (let ((year (format-time-string "%Y")))
-	 (while (search-forward "<year>" end t)
-	   (replace-match year t t)))
+       (while (search-forward "<year>" end t)
+	 (replace-match (format-time-string "%Y" nil) t t))
        (goto-char beg)
        (when file-title
 	 (while (search-forward "<title string>" end t)
