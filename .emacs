@@ -69,9 +69,6 @@
 ;; Add findutils to path
 (setenv "PATH" (concat "c:/Program Files/findutils;" (getenv "PATH")))
 (setq exec-path (cons "c:/Program Files/findutils/" exec-path))
-;; Add modelsim to path
-;;(setenv "PATH" (concat "c:/EDA/modeltech_pe_10.5d/win32pe;" (getenv "PATH")))
-;;(setq exec-path (cons "c:/EDA/modeltech_pe_10.5d/win32pe/" exec-path))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Mode related changes
@@ -136,6 +133,13 @@
         ("MELPA Stable" . 42)))
 (package-initialize)
 
+;; Set lsp-use-plists before the first require
+(if (string= (getenv "LSP_USE_PLISTS") "t")
+    (setq lsp-use-plists t)
+  (progn
+    (warn "Set LSP_USE_PLISTS to use plist for lsp-mode")
+    (setq lsp-use-plists nil)))
+
 ;; Automatically install packages if one of them is missing
 (unless (and
          (require 'tabbar nil 'noerror)
@@ -173,7 +177,6 @@
 (define-key html-mode-map "\C-c\C-b" 'format-all-buffer)
 
 ;; lsp mode
-(setq lsp-use-plists t)
 (setq lsp-keymap-prefix "C-l")
 (require 'lsp-mode)
 (add-hook 'vhdl-mode-hook
