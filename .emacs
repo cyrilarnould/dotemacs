@@ -51,6 +51,8 @@
 ;;; Use global-display-line-numbers-mode instead of linum-mode for better performance
 (when (version<= "26.0.50" emacs-version )
   (global-display-line-numbers-mode))
+
+;; truncate lines by default
 (setq-default truncate-lines t)
 
 ;; Maybe improve garbage collector performance?
@@ -73,6 +75,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Mode related changes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Word wrapping in text mode
+(add-hook 'text-mode-hook 'visual-line-mode)
+
 ;; disable image mode for PGM
 (add-to-list 'auto-mode-alist '("\\.pgm\\'" . text-mode))
 
