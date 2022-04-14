@@ -6,8 +6,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ac-auto-show-menu 0.0)
+ '(ac-delay 0.0)
+ '(ac-disable-faces nil)
  '(column-number-mode t)
  '(cua-mode t nil (cua-base))
+ '(flycheck-python-pylint-executable "python")
  '(grep-use-null-device nil)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
@@ -16,7 +20,8 @@
  '(native-comp-async-query-on-exit t)
  '(native-comp-speed 3)
  '(package-native-compile t)
- '(package-selected-packages '(yaml-mode format-all lsp-mode tabbar vlf flycheck))
+ '(package-selected-packages
+   '(auto-complete yaml-mode format-all lsp-mode tabbar vlf flycheck))
  '(size-indication-mode t)
  '(tab-always-indent nil)
  '(tab-width 2)
@@ -80,9 +85,6 @@
 
 ;; disable image mode for PGM
 (add-to-list 'auto-mode-alist '("\\.pgm\\'" . text-mode))
-
-;; Enable auto-complete in python
-(add-hook 'python-mode-hook 'auto-complete-mode)
 
 ;; Load octave-mode for Matlab files
 (setq auto-mode-alist
@@ -152,6 +154,7 @@
          (require 'yaml-mode nil 'noerror)
          (require 'flycheck nil 'noerror)
          (require 'format-all nil 'noerror)
+         (require 'auto-complete nil 'noerror)
          (require 'lsp-mode nil 'noerror))
   (package-refresh-contents)
   (package-install-selected-packages))
@@ -180,6 +183,10 @@
 (require 'format-all)
 (define-key nxml-mode-map "\C-c\C-b" 'format-all-buffer)
 (define-key html-mode-map "\C-c\C-b" 'format-all-buffer)
+
+;; Enable auto-complete in python
+(require 'auto-complete)
+(add-hook 'python-mode-hook 'auto-complete-mode)
 
 ;; lsp mode
 (setq lsp-keymap-prefix "C-l")
