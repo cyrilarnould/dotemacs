@@ -114,6 +114,9 @@
 (add-hook 'html-mode-hook 'hs-minor-mode)
 (define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
 (define-key html-mode-map (kbd "C-c h") 'hs-toggle-hiding)
+;; truncate lines in html/xml modes
+(add-hook 'nxml-mode-hook 'toggle-truncate-lines)
+(add-hook 'html-mode-hook 'toggle-truncate-lines)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Locally downloaded packages
