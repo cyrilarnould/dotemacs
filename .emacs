@@ -6,6 +6,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(TeX-auto-save t)
+ '(TeX-parse-self t)
+ '(TeX-source-correlate-mode t)
+ '(TeX-source-correlate-start-server t)
  '(ac-auto-show-menu 0.0)
  '(ac-delay 0.0)
  '(ac-disable-faces nil)
@@ -21,7 +25,7 @@
  '(native-comp-speed 3)
  '(package-native-compile t)
  '(package-selected-packages
-   '(auto-complete yaml-mode format-all lsp-mode tabbar vlf flycheck))
+   '(pdf-tools auctex auto-complete yaml-mode format-all lsp-mode tabbar vlf flycheck))
  '(size-indication-mode t)
  '(tab-always-indent nil)
  '(tab-width 2)
@@ -47,6 +51,9 @@
 ;;Increase the amount of data which Emacs reads from the process (for better lsp-mode performance)
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 
+;; UTF-8
+(set-language-environment "UTF-8")
+
  ;; show path
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))
@@ -66,6 +73,9 @@
 
 ;; grep command
 (setq grep-command "grep --exclude-dir=.svn -nry")
+
+;; Add shortcut for find-file-at-point
+(global-set-key (kbd "C-x f") 'find-file-at-point) 
 
 ;;redefine kp-decimal to . because vhdl-electric-mode messes it up
 (define-key global-map [kp-decimal] [?.])
@@ -158,6 +168,8 @@
          (require 'flycheck nil 'noerror)
          (require 'format-all nil 'noerror)
          (require 'auto-complete nil 'noerror)
+         (require 'pdf-tools nil 'noerror)
+         (require 'tex-site nil 'noerror) ;; Is actually auctex
          (require 'lsp-mode nil 'noerror))
   (package-refresh-contents)
   (package-install-selected-packages))
@@ -197,3 +209,15 @@
 (add-hook 'vhdl-mode-hook
           (lambda () (local-set-key (kbd "C-c C-l") #'lsp)))
 (setq lsp-headerline-breadcrumb-enable nil)
+
+;; PDF Tools
+(pdf-tools-install)
+
+;; AUCTeX
+;; Use pdf-tools to open PDF files
+(setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+      TeX-source-correlate-start-server t)
+
+;; Update PDF buffers after successful LaTeX runs
+(add-hook 'TeX-after-compilation-finished-functions
+           #'TeX-revert-document-buffer)
