@@ -26,6 +26,31 @@
  '(package-native-compile t)
  '(package-selected-packages
    '(pdf-tools auctex auto-complete yaml-mode format-all lsp-mode tabbar vlf flycheck))
+ '(reftex-ref-style-alist
+   '(("Default" t
+      (("\\ref" 114)
+       ("\\Ref" 82)
+       ("\\footref" 110)
+       ("\\pageref" 112)
+       ("\\Cref" 13)
+       ("\\cref" 99)))
+     ("Varioref" "varioref"
+      (("\\vref" 118)
+       ("\\Vref" 86)
+       ("\\vpageref" 103)))
+     ("Fancyref" "fancyref"
+      (("\\fref" 102)
+       ("\\Fref" 70)))
+     ("Hyperref" "hyperref"
+      (("\\autoref" 97)
+       ("\\autopageref" 117)))
+     ("Cleveref" "cleveref"
+      (("\\cref" 99)
+       ("\\Cref" 67)
+       ("\\cpageref" 100)
+       ("\\Cpageref" 68)))
+     ("AMSmath" "amsmath"
+      (("\\eqref" 101)))))
  '(size-indication-mode t)
  '(tab-always-indent nil)
  '(tab-width 2)
@@ -86,6 +111,8 @@
 ;; Add findutils to path
 (setenv "PATH" (concat "c:/Program Files/findutils;" (getenv "PATH")))
 (setq exec-path (cons "c:/Program Files/findutils/" exec-path))
+;; Set default language for hunspell
+(setenv "LANG" "en_GB")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Mode related changes
@@ -148,8 +175,8 @@
 (add-to-list 'package-archives '("MELPA Stable" . "https://stable.melpa.org/packages/"))
 (setq package-archive-priorities
       '(("gnu"     . 666)
-        ("nongnu"  . 420)
-        ("MELPA"        . 69)
+        ("MELPA"        . 420)
+        ("nongnu"       . 69)
         ("MELPA Stable" . 42)))
 (package-initialize)
 
@@ -221,3 +248,14 @@
 ;; Update PDF buffers after successful LaTeX runs
 (add-hook 'TeX-after-compilation-finished-functions
            #'TeX-revert-document-buffer)
+;; Fit PDF to window automatically
+(add-hook 'pdf-view-mode-hook
+          #'pdf-view-fit-page-to-window)
+
+(add-hook 'LaTeX-mode-hook 'auto-complete-mode)
+(add-hook 'LaTeX-mode-hook 'reftex-mode)
+(add-hook 'LaTeX-mode-hook #'turn-on-flyspell)
+(add-hook 'LaTeX-mode-hook 'ac-flyspell-workaround)
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-b") #'align-current)))
