@@ -1,5 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; General Configuration
+;;; Custom
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -47,8 +47,6 @@
      ("gnu" . "https://elpa.gnu.org/packages/")
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
  '(package-native-compile t)
- '(package-selected-packages
-   '(pdf-tools auctex auto-complete yaml-mode format-all lsp-mode tabbar vlf flycheck))
  '(pdf-view-display-size 'fit-page)
  '(reftex-ref-style-alist
    '(("Default" t
@@ -132,113 +130,125 @@
 (setenv "LSP_USE_PLISTS" "t")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Package management
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Add path to locally downloaded packages
+(add-to-list 'load-path "~/.lisp/")
+
+;; Package manager
+(require 'package)
+(package-initialize)
+
+;; Use-package manual installation
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Built-in packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Word wrapping in text mode
-(add-hook 'text-mode-hook 'visual-line-mode)
+(use-package visual-line-mode
+  :hook text-mode)
 
-;; disable image mode for PGM
-(add-to-list 'auto-mode-alist '("\\.pgm\\'" . text-mode))
+;; Fundamental image mode for pgm files
+(use-package fundamental-mode
+  :mode "\\.pgm\\'")
+(use-package image-minor-mode
+  :mode "\\.pgm\\'")
 
 ;; Octave Mode for matlab files
-(setq auto-mode-alist
-      (cons
-       '("\\.m$" . octave-mode)
-       auto-mode-alist))
+(use-package octave-mode
+  :mode "\\.m\\'")
 
-;; XML/HTML Mode commenting
-(add-hook
-  'nxml-mode-hook
-  (lambda ()
-    (define-key nxml-mode-map "\C-c\C-c" 'comment-region)
-    (define-key nxml-mode-map "\C-c\C-u" 'uncomment-region)))
+;; XML Mode
+(use-package nxml-mode
+  :bind (("C-c C-c" . comment-or-uncomment-region)
+         :map nxml-mode-map
+         ("C-c C-b" . format-all-buffer)))
+
+;; HTML Mode
+(use-package html-mode
+  :bind (("C-c C-c" . comment-or-uncomment-region)
+         :map html-mode-map
+         ("C-c C-b" . format-all-buffer)))
 
 ;; hideshow for xml/html
-(require 'hideshow)
-(require 'nxml-mode)
-(add-to-list 'hs-special-modes-alist
-             '(nxml-mode "<!--\\|<[^/>]*[^/]>" "-->\\|</[^/>]*[^/]>" "<!--" nil nil))
-(add-hook 'nxml-mode-hook 'hs-minor-mode)
-(add-hook 'html-mode-hook 'hs-minor-mode)
-(define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
-(define-key html-mode-map (kbd "C-c h") 'hs-toggle-hiding)
-
+(use-package hs-minor-mode
+  :init (add-to-list 'hs-special-modes-alist
+                     '(nxml-mode "<!--\\|<[^/>]*[^/]>" "-->\\|</[^/>]*[^/]>" "<!--" nil nil))
+  :bind (("C-c h t" . hs-toggle-hiding)
+         ("C-c h a" . hs-hide-all)
+         ("C-c h b" . hs-hide-block)
+         ("C-c h l" . hs-hide-level)
+         ("C-c s a" . hs-show-all)
+         ("C-c s b" . hs-show-block))
+  :hook (nxml-mode html-mode))
+  
 ;; Truncate-lines for XML/HTML
-(add-hook 'nxml-mode-hook 'toggle-truncate-lines)
-(add-hook 'html-mode-hook 'toggle-truncate-lines)
+(use-package toggle-truncate-lines
+  :hook (nxml-mode html-mode))
+
+;; Enable flyspell for latex mode
+(use-package flyspell
+  :hook ((LaTeX-mode . turn-on-flyspell)
+         (LaTeX-mode . ac-flyspell-workaround)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Locally downloaded packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-to-list 'load-path "~/.lisp/")
-
 ;; Multi-Scratch
-(require 'multi-scratch)
+(use-package multi-scratch)
 
-;; Vivado mode
-(require 'vivado-mode)
-(add-to-list 'auto-mode-alist '("\\.xdc\\'" . vivado-mode))
+;; Vivado Mode
+(use-package vivado-mode
+  :mode "\\.xdc\\'")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Archive packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'package)
-(package-initialize)
-
-;; Automatically install packages if one of them is missing
-(unless (and
-         (require 'tabbar nil 'noerror)
-         (require 'vlf nil 'noerror)
-         (require 'yaml-mode nil 'noerror)
-         (require 'flycheck nil 'noerror)
-         (require 'format-all nil 'noerror)
-         (require 'auto-complete nil 'noerror)
-         (require 'pdf-tools nil 'noerror)
-         (require 'tex-site nil 'noerror) ;; Is actually auctex
-         (require 'lsp-mode nil 'noerror))
-  (package-refresh-contents)
-  (package-install-selected-packages))
-
 ;; Tabbar
-(require 'tabbar)
+(use-package tabbar
+  :ensure t)
 
 ;; View large files (vlf)
-(require 'vlf)
+(use-package vlf
+  :ensure t)
 
 ;; Yaml mode
-(require 'yaml-mode)
-    (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
-(add-hook 'yaml-mode-hook
-  '(lambda ()
-    (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+(use-package yaml-mode
+  :ensure t)
 
 ;; Flycheck
-(require 'flycheck)
+(use-package flycheck
+  :ensure t)
 
 ;; format-all to beautify code
-(require 'format-all)
-(define-key nxml-mode-map "\C-c\C-b" 'format-all-buffer)
-(define-key html-mode-map "\C-c\C-b" 'format-all-buffer)
+(use-package format-all
+  :ensure t)
 
 ;; Auto-Complete
-(require 'auto-complete)
-(add-hook 'python-mode-hook 'auto-complete-mode)
+(use-package auto-complete-mode
+  :ensure auto-complete
+  :hook (python-mode LaTeX-mode))
 
-;; lsp mode
-(require 'lsp-mode)
-(add-hook 'vhdl-mode-hook
-          (lambda () (local-set-key (kbd "C-c C-l") #'lsp)))
+;; LSP mode
+(use-package lsp-mode
+  :ensure t
+  :bind ("C-c l" . lsp))
 
 ;; PDF Tools
-(pdf-tools-install)
+(use-package pdf-tools
+  :ensure t
+  :config (pdf-tools-install :no-query))
 
 ;; AUCTeX
-;; Update PDF buffers after successful LaTeX runs
-(add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
-(add-hook 'LaTeX-mode-hook 'auto-complete-mode)
-(add-hook 'LaTeX-mode-hook 'reftex-mode)
-(add-hook 'LaTeX-mode-hook #'turn-on-flyspell)
-(add-hook 'LaTeX-mode-hook 'ac-flyspell-workaround)
-(add-hook 'LaTeX-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-c C-b") #'align-current)))
+(use-package latex
+  :ensure auctex
+  :bind (:map LaTeX-mode-map
+         ("C-c C-b" . align-current))
+  :init  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
+(use-package reftex-mode
+  :ensure auctex
+  :hook LaTeX-mode)
