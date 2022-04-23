@@ -10,22 +10,46 @@
  '(TeX-parse-self t)
  '(TeX-source-correlate-mode t)
  '(TeX-source-correlate-start-server t)
+ '(TeX-view-program-selection
+   '(((output-dvi style-pstricks)
+      "dvips and start")
+     (output-dvi "Yap")
+     (output-pdf "PDF Tools")
+     (output-html "start")))
  '(ac-auto-show-menu 0.0)
  '(ac-delay 0.0)
  '(ac-disable-faces nil)
  '(column-number-mode t)
  '(cua-mode t nil (cua-base))
+ '(flycheck-global-modes '(not nxml-mode))
  '(flycheck-python-pylint-executable "python")
+ '(gc-cons-threshold 104857600 nil nil "For better lsp-mode performance")
+ '(global-display-line-numbers-mode t)
+ '(global-flycheck-mode t)
+ '(grep-command "grep --exclude-dir=.svn -nry")
  '(grep-use-null-device nil)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
+ '(lsp-headerline-breadcrumb-enable nil)
+ '(lsp-keymap-prefix "C-l")
  '(native-comp-always-compile t)
- '(native-comp-async-jobs-number 8)
+ '(native-comp-async-jobs-number 8 nil nil "Will cause 'too many open files' error but simply reopen emacs to recompile")
  '(native-comp-async-query-on-exit t)
  '(native-comp-speed 3)
+ '(package-archive-priorities
+   '(("gnu" . 666)
+     ("MELPA" . 420)
+     ("nongnu" . 69)
+     ("MELPA Stable" . 42)))
+ '(package-archives
+   '(("MELPA Stable" . "https://stable.melpa.org/packages/")
+     ("MELPA" . "https://melpa.org/packages/")
+     ("gnu" . "https://elpa.gnu.org/packages/")
+     ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
  '(package-native-compile t)
  '(package-selected-packages
    '(pdf-tools auctex auto-complete yaml-mode format-all lsp-mode tabbar vlf flycheck))
+ '(pdf-view-display-size 'fit-page)
  '(reftex-ref-style-alist
    '(("Default" t
       (("\\ref" 114)
@@ -54,7 +78,9 @@
  '(size-indication-mode t)
  '(tab-always-indent nil)
  '(tab-width 2)
+ '(tabbar-mode t nil (tabbar))
  '(tool-bar-mode nil)
+ '(truncate-lines t)
  '(user-full-name "Cyril Arnould")
  '(user-mail-address "cyril.arnould@outlook.com")
  '(vhdl-clock-edge-condition 'function)
@@ -70,6 +96,9 @@
  ;; If there is more than one, they won't work right.
  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Basic setup
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; start server
 (server-start)
 
@@ -82,40 +111,28 @@
  ;; show path
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))
-        '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+            '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+
+;; Do not disable upcase/downcase region
+(put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
-
-;;; Use global-display-line-numbers-mode instead of linum-mode for better performance
-(when (version<= "26.0.50" emacs-version )
-  (global-display-line-numbers-mode))
-
-;; truncate lines by default
-(setq-default truncate-lines t)
-
-;; Maybe improve garbage collector performance?
-(setq gc-cons-threshold-original gc-cons-threshold)
-(setq gc-cons-threshold (* 1024 1024 100))
-
-;; grep command
-(setq grep-command "grep --exclude-dir=.svn -nry")
 
 ;; Add shortcut for find-file-at-point
 (global-set-key (kbd "C-x f") 'find-file-at-point) 
 
-;;redefine kp-decimal to . because vhdl-electric-mode messes it up
-(define-key global-map [kp-decimal] [?.])
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; PATH
+;;; Environment variables
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Add findutils to path
 (setenv "PATH" (concat "c:/Program Files/findutils;" (getenv "PATH")))
 (setq exec-path (cons "c:/Program Files/findutils/" exec-path))
 ;; Set default language for hunspell
 (setenv "LANG" "en_GB")
+;; Set LSP_USE_PLISTS
+(setenv "LSP_USE_PLISTS" "t")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Mode related changes
+;;; Built-in packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Word wrapping in text mode
 (add-hook 'text-mode-hook 'visual-line-mode)
@@ -123,35 +140,30 @@
 ;; disable image mode for PGM
 (add-to-list 'auto-mode-alist '("\\.pgm\\'" . text-mode))
 
-;; Load octave-mode for Matlab files
+;; Octave Mode for matlab files
 (setq auto-mode-alist
       (cons
        '("\\.m$" . octave-mode)
        auto-mode-alist))
 
-;; XML wizardry
+;; XML/HTML Mode commenting
 (add-hook
   'nxml-mode-hook
   (lambda ()
     (define-key nxml-mode-map "\C-c\C-c" 'comment-region)
     (define-key nxml-mode-map "\C-c\C-u" 'uncomment-region)))
-;; hide/show xml
+
+;; hideshow for xml/html
 (require 'hideshow)
-(require 'sgml-mode)
 (require 'nxml-mode)
 (add-to-list 'hs-special-modes-alist
-             '(nxml-mode
-               "<!--\\|<[^/>]*[^/]>"
-               "-->\\|</[^/>]*[^/]>"
-
-               "<!--"
-               sgml-skip-tag-forward
-               nil))
+             '(nxml-mode "<!--\\|<[^/>]*[^/]>" "-->\\|</[^/>]*[^/]>" "<!--" nil nil))
 (add-hook 'nxml-mode-hook 'hs-minor-mode)
 (add-hook 'html-mode-hook 'hs-minor-mode)
 (define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
 (define-key html-mode-map (kbd "C-c h") 'hs-toggle-hiding)
-;; truncate lines in html/xml modes
+
+;; Truncate-lines for XML/HTML
 (add-hook 'nxml-mode-hook 'toggle-truncate-lines)
 (add-hook 'html-mode-hook 'toggle-truncate-lines)
 
@@ -168,24 +180,10 @@
 (add-to-list 'auto-mode-alist '("\\.xdc\\'" . vivado-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; MELPA packages
+;;; Archive packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'package)
-(add-to-list 'package-archives '("MELPA"        . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("MELPA Stable" . "https://stable.melpa.org/packages/"))
-(setq package-archive-priorities
-      '(("gnu"     . 666)
-        ("MELPA"        . 420)
-        ("nongnu"       . 69)
-        ("MELPA Stable" . 42)))
 (package-initialize)
-
-;; Set lsp-use-plists before the first require
-(if (string= (getenv "LSP_USE_PLISTS") "t")
-    (setq lsp-use-plists t)
-  (progn
-    (warn "Set LSP_USE_PLISTS to use plist for lsp-mode")
-    (setq lsp-use-plists nil)))
 
 ;; Automatically install packages if one of them is missing
 (unless (and
@@ -203,8 +201,6 @@
 
 ;; Tabbar
 (require 'tabbar)
-(tabbar-mode 1)
-(put 'upcase-region 'disabled nil)
 
 ;; View large files (vlf)
 (require 'vlf)
@@ -216,42 +212,29 @@
   '(lambda ()
     (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
-;; flycheck
+;; Flycheck
 (require 'flycheck)
-  (add-hook 'after-init-hook #'global-flycheck-mode)
-  (add-hook 'nxml-mode-hook  (lambda () (flycheck-mode -1))) ;; Disable in xml mode
 
 ;; format-all to beautify code
 (require 'format-all)
 (define-key nxml-mode-map "\C-c\C-b" 'format-all-buffer)
 (define-key html-mode-map "\C-c\C-b" 'format-all-buffer)
 
-;; Enable auto-complete in python
+;; Auto-Complete
 (require 'auto-complete)
 (add-hook 'python-mode-hook 'auto-complete-mode)
 
 ;; lsp mode
-(setq lsp-keymap-prefix "C-l")
 (require 'lsp-mode)
 (add-hook 'vhdl-mode-hook
           (lambda () (local-set-key (kbd "C-c C-l") #'lsp)))
-(setq lsp-headerline-breadcrumb-enable nil)
 
 ;; PDF Tools
 (pdf-tools-install)
 
 ;; AUCTeX
-;; Use pdf-tools to open PDF files
-(setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-      TeX-source-correlate-start-server t)
-
 ;; Update PDF buffers after successful LaTeX runs
-(add-hook 'TeX-after-compilation-finished-functions
-           #'TeX-revert-document-buffer)
-;; Fit PDF to window automatically
-(add-hook 'pdf-view-mode-hook
-          #'pdf-view-fit-page-to-window)
-
+(add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
 (add-hook 'LaTeX-mode-hook 'auto-complete-mode)
 (add-hook 'LaTeX-mode-hook 'reftex-mode)
 (add-hook 'LaTeX-mode-hook #'turn-on-flyspell)

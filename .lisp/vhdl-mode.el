@@ -8785,7 +8785,7 @@ project is defined."
 (defun vhdl-electric-period (count) "`..' --> ` => '"
   (interactive "p")
   (if (and vhdl-stutter-mode (= count 1) (not (vhdl-in-literal)))
-      (cond ((= (preceding-char) vhdl-last-input-event)
+      (cond ((= (preceding-char) ?\.)
 	     (progn (delete-char -1)
 		    (unless (eq (preceding-char) ? ) (insert " "))
 		    (insert "=> ")))
