@@ -66,4 +66,3 @@
 (provide 'vivado-mode)
 
 ;;; vivado-mode.el ends here
-

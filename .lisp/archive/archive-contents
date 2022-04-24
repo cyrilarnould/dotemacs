@@ -1,0 +1,12 @@
+(1
+ (vivado-mode .
+              [(0 1)
+               nil "Vivado Constraints Mode" single nil])
+ (multi-scratch .
+                [(0 3)
+                 nil "Multiple scratches manager" single
+                 ((:authors
+                   ("Andy Stewart" . "lazycat.manatee@gmail.com"))
+                  (:maintainer "Andy Stewart" . "lazycat.manatee@gmail.com")
+                  (:url . "http://www.emacswiki.org/emacs/download/multi-scratch.el"))]))
+

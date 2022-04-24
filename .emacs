@@ -37,16 +37,21 @@
  '(native-comp-async-query-on-exit t)
  '(native-comp-speed 3)
  '(package-archive-priorities
-   '(("gnu" . 666)
+   '(("local" . 1337)
+     ("gnu" . 666)
      ("MELPA" . 420)
      ("nongnu" . 69)
      ("MELPA Stable" . 42)))
+ '(package-archive-upload-base "~/.lisp/archive")
  '(package-archives
-   '(("MELPA Stable" . "https://stable.melpa.org/packages/")
+   '(("local" . "~/.lisp/archive")
+     ("MELPA Stable" . "https://stable.melpa.org/packages/")
      ("MELPA" . "https://melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
  '(package-native-compile t)
+ '(package-selected-packages
+   '(toggle-truncate-lines hs-minor-mode html-mode nxml-mode octave-mode image-minor-mode fundamental-mode visual-line-mode vivado-mode multi-scratch benchmark-init yaml-mode vlf use-package tabbar pdf-tools lsp-mode format-all flycheck auto-complete auctex))
  '(pdf-view-display-size 'fit-page)
  '(reftex-ref-style-alist
    '(("Default" t
@@ -79,6 +84,7 @@
  '(tabbar-mode t nil (tabbar))
  '(tool-bar-mode nil)
  '(truncate-lines t)
+ '(use-package-always-defer t)
  '(user-full-name "Cyril Arnould")
  '(user-mail-address "cyril.arnould@outlook.com")
  '(vhdl-clock-edge-condition 'function)
@@ -133,7 +139,7 @@
 ;;; Package management
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Add path to locally downloaded packages
-(add-to-list 'load-path "~/.lisp/")
+(add-to-list 'load-path "~/.lisp/load")
 
 ;; Package manager
 (require 'package)
@@ -196,18 +202,17 @@
          (LaTeX-mode . ac-flyspell-workaround)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Locally downloaded packages
+;;; Archive packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Multi-Scratch
-(use-package multi-scratch)
+(use-package multi-scratch
+  :ensure t)
 
 ;; Vivado Mode
 (use-package vivado-mode
+  :ensure t
   :mode "\\.xdc\\'")
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Archive packages
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tabbar
 (use-package tabbar
   :ensure t)
