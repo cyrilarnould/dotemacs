@@ -1,0 +1,54 @@
+\documentclass{curve}
+\usepackage{import}
+
+\begin{document}
+
+\input{../fake/one}
+\input{../../fake/guess-tex-master/two}
+\input{.././../guess-tex-master/./fake/./three}
+
+\include{fakeone}
+\input{../abc/fake/two}%Only works with input
+\include{./fakethree}
+
+\makerubric{deffake/one}
+\makerubric{../abcfake/def/two.tex}
+\makerubric{./def/./fake/./three}
+
+\import{lmn/fake/}{one}
+\import{../abc/lmn/}{faketwo}
+\import{./fake/lmn/./}{three}
+
+\subimport{lmnfake/geh/}{one}
+\subimport{.././fakeabc/lmn/geh/}{two.tex}
+\subimport{./lmn/./fake/geh/}{three}
+
+\include{ijkfake/white space/one.tex}
+\input{"ijk/white space/twofake"}
+\import{ijk/"fake white space"/}{three}
+
+\inputfake{../one}
+\inputfake{../../guess-tex-master/two}
+\inputfake{.././../guess-tex-master/././three}
+
+\fakeinclude{one}
+\fakeinput{../abc/two}%Only works with input
+\fakeinclude{./three}
+
+\fakemakerubricone{}
+\makefakerubric{../abc/def/two.tex}
+\fakemakerubric{./def/./three}
+
+\fakeimport{lmn/}{one}
+\fakeimport{../abc/lmn/}{two}
+\fakeimport{./lmn/./}{three}
+
+\fakesubimport{lmn/geh/}{one}
+\fakesubimport{.././abc/lmn/geh/}{two.tex}
+\fakesubimport{./lmn/./geh/}{three}
+
+\fakeinclude{ijk/white space/one.tex}
+\fakeinput{"ijk/white space/two"}
+\fakeimport{ijk/"white space"/}{three}
+
+\end{document}

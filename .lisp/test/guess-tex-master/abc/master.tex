@@ -1,0 +1,30 @@
+\documentclass{curve}
+\usepackage{import}
+
+\begin{document}
+
+\input{../one}
+\input{../../guess-tex-master/two}
+\input{.././../guess-tex-master/././three}
+
+\include{one}
+\input{../abc/two}%Only works with input
+\include{./three}
+
+\makerubric{def/one}
+\makerubric{../abc/def/two.tex}
+\makerubric{./def/./three}
+
+\import{lmn/}{one}
+\import{../abc/lmn/}{two}
+\import{./lmn/./}{three}
+
+\subimport{lmn/geh/}{one}
+\subimport{.././abc/lmn/geh/}{two.tex}
+\subimport{./lmn/./geh/}{three}
+
+\include{ijk/white space/one.tex}
+\input{"ijk/white space/two"}
+\import{ijk/"white space"/}{three}
+
+\end{document}

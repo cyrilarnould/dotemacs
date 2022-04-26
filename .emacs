@@ -8,6 +8,7 @@
  ;; If there is more than one, they won't work right.
  '(TeX-auto-save t)
  '(TeX-error-overview-open-after-TeX-run t)
+ '(TeX-master nil)
  '(TeX-parse-self t)
  '(TeX-source-correlate-mode t)
  '(TeX-source-correlate-start-server t)
@@ -52,7 +53,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
  '(package-native-compile t)
  '(package-selected-packages
-   '(auto-complete-auctex vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auto-complete auctex))
+   '(guess-tex-master auto-complete-auctex vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auto-complete auctex))
  '(pdf-view-display-size 'fit-page)
  '(reftex-ref-style-default-list '("Default" "Cleveref"))
  '(size-indication-mode t)
@@ -194,6 +195,10 @@
   :ensure t
   :mode "\\.xdc\\'")
 
+;; Guess TeX master for auctex
+(use-package guess-tex-master
+  :ensure t)
+
 ;; Tabbar
 (use-package tabbar
   :ensure t)
@@ -242,43 +247,7 @@
         ("C-c c" . TeX-command-master)              
         ("C-c C-c" . comment-or-uncomment-region))
   :init
-  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
-  (declare-function guess-TeX-master ".emacs")
-  (add-hook 'LaTeX-mode-hook #'guess-TeX-master)
-  :config
-  (defun guess-TeX-master ()
-    "Guess the master file for FILENAME from currently open .tex files."
-    (let ((candidate t)
-          (folder (file-name-nondirectory (directory-file-name (file-name-directory (buffer-file-name)))))
-          (filename (file-name-nondirectory (buffer-file-name))))
-      (save-excursion
-        (dolist (buffer (buffer-list))
-          (with-current-buffer buffer
-            (let ((name (buffer-name))
-                  (file buffer-file-name))
-              (if (and file (string-match "\\.tex$" file))
-                  (progn
-                    (goto-char (point-min))
-                    (if (re-search-forward (concat "\\\\input{" filename "}") nil t)
-                        (setq candidate file))
-                    (if (re-search-forward (concat "\\\\input{" (file-name-sans-extension filename) "}") nil t)
-                        (setq candidate file))
-                    (if (re-search-forward (concat "\\\\input{" folder "/" filename "}") nil t)
-                        (setq candidate file))
-                    (if (re-search-forward (concat "\\\\input{" folder "/" (file-name-sans-extension filename) "}") nil t)
-                        (setq candidate file))
-                    (if (re-search-forward (concat "\\\\include{" filename "}") nil t)
-                        (setq candidate file))
-                    (if (re-search-forward (concat "\\\\include{" folder "/" filename "}") nil t)
-                        (setq candidate file))                    
-                    (if (re-search-forward (concat "\\\\include{" (file-name-sans-extension filename) "}") nil t)
-                        (setq candidate file))
-                    (if (re-search-forward (concat "\\\\include{" folder "/" (file-name-sans-extension filename) "}") nil t)
-                        (setq candidate file))))))))
-      (unless (string= candidate "t")
-        (if candidate
-            (message "TeX master document: %s" (file-name-nondirectory candidate))))
-      (setq TeX-master candidate))))
+  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
 (use-package reftex-mode
   :ensure auctex
   :hook LaTeX-mode)

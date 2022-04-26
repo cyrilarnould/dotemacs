@@ -1,15 +1,14 @@
-;;; guess-tex-master.el --- Guess LaTeX Master File
+;;; guess-tex-master.el --- Guess LaTeX Master File -*- lexical-binding: t; -*-
 ;; 
 ;; Filename: guess-tex-master.el
 ;; Description: Guess LaTeX Master File
 ;; Author: Unknown & Matthew L. Fidler & Cyril Arnould
 ;; Maintainer: Cyril Arnould
 ;; Created: Mon Dec 12 14:12:47 2011 (-0600)
-;; Version:  0.3
+;; Version:  0.4
 ;; Last-Updated: Mon Dec 12 15:31:35 2011 (-0600)
 ;;           By: Matthew L. Fidler
 ;;     Update #: 56
-;; URL: https://github.com/mlf176f2/guess-tex-master.el
 ;; Keywords: AucTeX TeX-master
 ;; Compatibility:
 ;; 
@@ -26,6 +25,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 
 ;;; Change Log:
+;; 27-Apr-2022    Cyril Arnould
+;;    Enabled lexical-binding
+;;    Added support for dot characters in paths (./ and ../)
+;;    Bugfixes in folder search
 ;; 26-Apr-2022    Cyril Arnould
 ;;    Implemented support for inputs from subfolders
 ;; 12-Dec-2011    Matthew L. Fidler
@@ -94,33 +97,32 @@ grep."
 
 (defun guess-TeX-master-from-files (filename)
   "Guess TeX master for FILENAME from egrep list of files."
-  (let (val master)
+  (let ((master nil))
     ;; Unimplemented.
-  (symbol-value 'master)))
+    master))
 
 (defun guess-TeX-master-from-buffers (filename)
   "Guess TeX master for FILENAME from open .tex buffers."
-  (let (candidate)
+  (let ((candidate nil))
     (save-excursion
       (dolist (buffer (buffer-list))
         (with-current-buffer buffer
-          (let ((name (buffer-name))
-                (file buffer-file-name))
-            (if (and file (string-match "\\.tex$" file))
-                (save-excursion
-                  (goto-char (point-min))
-                  (when (re-search-forward (concat "\\\\"
-                                                   (regexp-opt guess-TeX-master-includes t)
-                                                   "{\\([^}]*\\)\\(}{\\)?"
-                                                   (file-name-sans-extension (file-name-nondirectory filename))
-                                                   "\\([.]tex\\)?}") nil t)
-                    ;; TODO: handle ./ and possibly ../
-                    (when (string= filename (concat
-                                             (file-name-directory (buffer-file-name))
-                                             (match-string 2)
-                                             (file-name-nondirectory filename)))
-                      (setq candidate file)))))))))
-    (symbol-value 'candidate)))
+          (let ((file buffer-file-name))
+            (when (and file (string-match "\\.tex$" file))
+              (save-excursion
+                (goto-char (point-min))
+                (while (re-search-forward (concat "\\\\"
+                                                  (regexp-opt guess-TeX-master-includes t)
+                                                  "{\\([^}]*\\)\\(}{\\)?"
+                                                  (file-name-sans-extension (file-name-nondirectory filename))
+                                                  "\\([.]tex\\)?\\\"?}") nil t)
+                  (when (string= filename
+                                 (file-truename (string-replace "\"" ""
+                                                             (concat (file-name-directory file)
+                                                                     (match-string 2)
+                                                                     (file-name-nondirectory filename)))))
+                    (setq candidate file)))))))))
+    candidate))
 
 ;;;###autoload
 (defun guess-TeX-master ()
@@ -137,9 +139,9 @@ grep."
           (progn
             (message "TeX master document: %s" (file-name-nondirectory candidate))
             (set (make-local-variable 'TeX-master) candidate))
-        (message "TeX master document: %s" filename)
+        (message "Couldn't find viable TeX master, setting this file: %s" (file-name-nondirectory filename))
         (set (make-local-variable 'TeX-master) filename)))
-    (symbol-value 'candidate)))
+    candidate))
 
 ;;;###autoload
 (add-hook 'LaTeX-mode-hook 'guess-TeX-master)
