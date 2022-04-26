@@ -1,4 +1,9 @@
 (1
+ (guess-tex-master .
+                   [(0 3)
+                    nil "Guess LaTeX Master File" single
+                    ((:keywords "auctex" "tex-master")
+                     (:url . "https://github.com/mlf176f2/guess-tex-master.el"))])
  (vivado-mode .
               [(0 1)
                nil "Vivado Constraints Mode" single nil])
