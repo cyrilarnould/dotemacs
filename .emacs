@@ -7,6 +7,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(TeX-auto-save t)
+ '(TeX-error-overview-open-after-TeX-run t)
  '(TeX-parse-self t)
  '(TeX-source-correlate-mode t)
  '(TeX-source-correlate-start-server t)
@@ -21,10 +22,10 @@
  '(ac-disable-faces nil)
  '(column-number-mode t)
  '(cua-mode t nil (cua-base))
+ '(fit-window-to-buffer-horizontally t)
  '(flycheck-global-modes '(not nxml-mode))
  '(flycheck-python-pylint-executable "python")
  '(gc-cons-threshold 104857600 nil nil "For better lsp-mode performance")
- '(global-display-line-numbers-mode t)
  '(global-flycheck-mode t)
  '(grep-command "grep --exclude-dir=.svn -nry")
  '(grep-use-null-device nil)
@@ -53,31 +54,7 @@
  '(package-selected-packages
    '(auto-complete-auctex vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auto-complete auctex))
  '(pdf-view-display-size 'fit-page)
- '(reftex-ref-style-alist
-   '(("Default" t
-      (("\\ref" 114)
-       ("\\Ref" 82)
-       ("\\footref" 110)
-       ("\\pageref" 112)
-       ("\\Cref" 13)
-       ("\\cref" 99)))
-     ("Varioref" "varioref"
-      (("\\vref" 118)
-       ("\\Vref" 86)
-       ("\\vpageref" 103)))
-     ("Fancyref" "fancyref"
-      (("\\fref" 102)
-       ("\\Fref" 70)))
-     ("Hyperref" "hyperref"
-      (("\\autoref" 97)
-       ("\\autopageref" 117)))
-     ("Cleveref" "cleveref"
-      (("\\cref" 99)
-       ("\\Cref" 67)
-       ("\\cpageref" 100)
-       ("\\Cpageref" 68)))
-     ("AMSmath" "amsmath"
-      (("\\eqref" 101)))))
+ '(reftex-ref-style-default-list '("Default" "Cleveref"))
  '(size-indication-mode t)
  '(tab-always-indent nil)
  '(tab-width 2)
@@ -175,9 +152,9 @@
          ("C-c C-b" . format-all-buffer)))
 
 ;; HTML Mode
-(use-package html-mode
+(use-package mhtml-mode
   :bind (("C-c C-c" . comment-or-uncomment-region)
-         :map html-mode-map
+         :map mhtml-mode-map
          ("C-c C-b" . format-all-buffer)))
 
 ;; hideshow for xml/html
@@ -190,16 +167,20 @@
          ("C-c h l" . hs-hide-level)
          ("C-c s a" . hs-show-all)
          ("C-c s b" . hs-show-block))
-  :hook (nxml-mode html-mode))
+  :hook (nxml-mode mhtml-mode))
   
 ;; Truncate-lines for XML/HTML
 (use-package toggle-truncate-lines
-  :hook (nxml-mode html-mode))
+  :hook (nxml-mode mhtml-mode))
 
 ;; Enable flyspell for latex mode
 (use-package flyspell
   :hook ((LaTeX-mode . turn-on-flyspell)
          (LaTeX-mode . ac-flyspell-workaround)))
+
+;; Enable line numbers
+(use-package display-line-numbers-mode
+  :hook (prog-mode text-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Archive packages
@@ -247,6 +228,8 @@
 (use-package pdf-tools
   :ensure t
   :magic ("%PDF" . pdf-view-mode)
+  :bind (:map pdf-view-mode-map
+         ("S" . fit-window-to-buffer))
   :config (pdf-loader-install))
 
 ;; AUCTeX
