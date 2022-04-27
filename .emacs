@@ -8,7 +8,6 @@
  ;; If there is more than one, they won't work right.
  '(TeX-auto-save t)
  '(TeX-error-overview-open-after-TeX-run t)
- '(TeX-master nil)
  '(TeX-parse-self t)
  '(TeX-source-correlate-mode t)
  '(TeX-source-correlate-start-server t)
