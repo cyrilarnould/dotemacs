@@ -8785,7 +8785,10 @@ project is defined."
 (defun vhdl-electric-period (count) "`..' --> ` => '"
   (interactive "p")
   (if (and vhdl-stutter-mode (= count 1) (not (vhdl-in-literal)))
-      (cond ((= (preceding-char) ?\.)
+      ;; We use this-command-keys below to account for translation of
+      ;; kp-decimal into '.'; vhdl-last-input-event doesn't catch
+      ;; that.
+      (cond ((eq (preceding-char) (aref (this-command-keys) 0))
 	     (progn (delete-char -1)
 		    (unless (eq (preceding-char) ? ) (insert " "))
 		    (insert "=> ")))
@@ -10683,8 +10686,9 @@ Include a library specification, if not already there."
 	 (replace-match "" t t)
 	 (vhdl-template-insert-date))
        (goto-char beg)
-       (while (search-forward "<year>" end t)
-	 (replace-match (format-time-string "%Y" nil) t t))
+       (let ((year (format-time-string "%Y")))
+	 (while (search-forward "<year>" end t)
+	   (replace-match year t t)))
        (goto-char beg)
        (when file-title
 	 (while (search-forward "<title string>" end t)
