@@ -18,14 +18,19 @@
      (output-dvi "Yap")
      (output-pdf "PDF Tools")
      (output-html "start")))
- '(ac-auto-show-menu 0.0)
- '(ac-delay 0.0)
- '(ac-disable-faces nil)
  '(column-number-mode t)
+ '(company-backends
+   '(company-bbdb company-semantic company-cmake company-capf company-clang company-files
+                  (company-dabbrev-code company-gtags company-etags company-keywords)
+                  company-oddmuse company-dabbrev company-anaconda))
+ '(company-idle-delay 0.0)
+ '(company-require-match nil)
+ '(company-tng-mode t)
  '(cua-mode t nil (cua-base))
  '(fit-window-to-buffer-horizontally t)
  '(flycheck-global-modes '(not nxml-mode))
  '(flycheck-python-pylint-executable "python")
+ '(flyspell-issue-message-flag nil)
  '(gc-cons-threshold 104857600 nil nil "For better lsp-mode performance")
  '(global-flycheck-mode t)
  '(grep-command "grep --exclude-dir=.svn -nry")
@@ -40,8 +45,8 @@
  '(native-comp-speed 3)
  '(package-archive-priorities
    '(("local" . 1337)
-     ("gnu" . 666)
-     ("MELPA" . 420)
+     ("MELPA" . 666)
+     ("gnu" . 420)
      ("nongnu" . 69)
      ("MELPA Stable" . 42)))
  '(package-archive-upload-base "~/.lisp/archive")
@@ -53,7 +58,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
  '(package-native-compile t)
  '(package-selected-packages
-   '(guess-tex-master auto-complete-auctex vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auto-complete auctex))
+   '(company-anaconda anaconda-mode company company-auctex guess-tex-master vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auctex))
  '(pdf-view-display-size 'fit-page)
  '(reftex-ref-style-default-list '("Default" "Cleveref"))
  '(size-indication-mode t)
@@ -176,8 +181,7 @@
 
 ;; Enable flyspell for latex mode
 (use-package flyspell
-  :hook ((LaTeX-mode . turn-on-flyspell)
-         (LaTeX-mode . ac-flyspell-workaround)))
+  :hook ((LaTeX-mode . turn-on-flyspell)))
 
 ;; Enable line numbers
 (use-package display-line-numbers-mode
@@ -219,10 +223,12 @@
 (use-package format-all
   :ensure t)
 
-;; Auto-Complete
-(use-package auto-complete-mode
-  :ensure auto-complete
-  :hook (python-mode LaTeX-mode))
+;; company for auto-completion
+(use-package company
+  :ensure t
+  :hook ((python-mode . company-mode)
+         (LaTeX-mode . company-mode))
+  :config (company-tng-mode))
 
 ;; LSP mode
 (use-package lsp-mode
@@ -253,5 +259,16 @@
   :hook LaTeX-mode)
 
 ;; Auto-complete for auctex
-(use-package auto-complete-auctex
-  :ensure t)
+(use-package company-auctex
+  :ensure t
+  :config (company-auctex-init))
+
+;; Anaconda (code documentation lookup for python)
+(use-package anaconda-mode
+  :ensure t
+  :hook python-mode)
+
+;; Company-Anaconda (auto-completion for python)
+(use-package company-anaconda
+  :ensure t
+  :hook (python-mode . anaconda-eldoc-mode))
