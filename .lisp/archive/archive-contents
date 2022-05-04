@@ -1,6 +1,6 @@
 (1
  (guess-tex-master .
-                   [(0 3)
+                   [(0 4)
                     nil "Guess LaTeX Master File" single
                     ((:keywords "auctex" "tex-master")
                      (:url . "https://github.com/mlf176f2/guess-tex-master.el"))])

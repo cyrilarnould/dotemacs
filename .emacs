@@ -35,6 +35,8 @@
  '(global-flycheck-mode t)
  '(grep-command "grep --exclude-dir=.svn -nry")
  '(grep-use-null-device nil)
+ '(guess-TeX-master-from-files-depth 2)
+ '(guess-TeX-master-from-files-up 1)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(lsp-headerline-breadcrumb-enable nil)
