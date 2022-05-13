@@ -113,8 +113,8 @@
 ;;; Environment variables
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Add findutils to path
-(setenv "PATH" (concat "c:/Program Files/findutils;" (getenv "PATH")))
-(setq exec-path (cons "c:/Program Files/findutils/" exec-path))
+(setenv "PATH" (concat "c:/Program Files/findutils/bin;" (getenv "PATH")))
+(setq exec-path (cons "c:/Program Files/findutils/bin/" exec-path))
 ;; Set default language for hunspell
 (setenv "LANG" "en_GB")
 ;; Set LSP_USE_PLISTS
