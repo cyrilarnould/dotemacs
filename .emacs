@@ -18,6 +18,7 @@
      (output-dvi "Yap")
      (output-pdf "PDF Tools")
      (output-html "start")))
+ '(archive-zip-extract '("7z" "e" "-so"))
  '(column-number-mode t)
  '(company-backends
    '(company-bbdb company-semantic company-cmake company-capf company-clang company-files
