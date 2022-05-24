@@ -28,10 +28,89 @@
  '(company-require-match nil)
  '(company-tng-mode t)
  '(cua-mode t nil (cua-base))
+ '(eldoc-idle-delay 0)
  '(fit-window-to-buffer-horizontally t)
  '(flycheck-global-modes '(not nxml-mode))
  '(flycheck-python-pylint-executable "python")
  '(flyspell-issue-message-flag nil)
+ '(format-all-default-formatters
+   '(("Assembly" asmfmt)
+     ("ATS" atsfmt)
+     ("Bazel" buildifier)
+     ("BibTeX" emacs-bibtex)
+     ("C" clang-format)
+     ("C#" clang-format)
+     ("C++" clang-format)
+     ("Cabal Config" cabal-fmt)
+     ("Clojure" zprint)
+     ("CMake" cmake-format)
+     ("Crystal" crystal)
+     ("CSS" prettier)
+     ("Cuda" clang-format)
+     ("D" dfmt)
+     ("Dart" dart-format)
+     ("Dhall" dhall)
+     ("Dockerfile" dockfmt)
+     ("Elixir" mix-format)
+     ("Elm" elm-format)
+     ("Emacs Lisp" emacs-lisp)
+     ("Erlang" efmt)
+     ("F#" fantomas)
+     ("Fish" fish-indent)
+     ("Fortran Free Form" fprettify)
+     ("GLSL" clang-format)
+     ("Go" gofmt)
+     ("GraphQL" prettier)
+     ("Haskell" brittany)
+     ("HTML" html-tidy)
+     ("Java" clang-format)
+     ("JavaScript" prettier)
+     ("JSON" prettier)
+     ("JSON5" prettier)
+     ("Jsonnet" jsonnetfmt)
+     ("JSX" prettier)
+     ("Kotlin" ktlint)
+     ("LaTeX" latexindent)
+     ("Less" prettier)
+     ("Literate Haskell" brittany)
+     ("Lua" lua-fmt)
+     ("Markdown" prettier)
+     ("Nix" nixpkgs-fmt)
+     ("Objective-C" clang-format)
+     ("OCaml" ocp-indent)
+     ("Perl" perltidy)
+     ("PHP" prettier)
+     ("Protocol Buffer" clang-format)
+     ("PureScript" purty)
+     ("Python" isort)
+     ("R" styler)
+     ("Reason" bsrefmt)
+     ("ReScript" rescript)
+     ("Ruby" rufo)
+     ("Rust" rustfmt)
+     ("Scala" scalafmt)
+     ("SCSS" prettier)
+     ("Shell" shfmt)
+     ("Solidity" prettier)
+     ("SQL" sqlformat)
+     ("Svelte" prettier)
+     ("Swift" swiftformat)
+     ("Terraform" terraform-fmt)
+     ("TOML" prettier)
+     ("TSX" prettier)
+     ("TypeScript" prettier)
+     ("V" v-fmt)
+     ("Verilog" istyle-verilog)
+     ("Vue" prettier)
+     ("XML" html-tidy)
+     ("YAML" prettier)
+     ("Zig" zig)
+     ("_Angular" prettier)
+     ("_Flow" prettier)
+     ("_Gleam" gleam)
+     ("_Ledger" ledger-mode)
+     ("_Nginx" nginxfmt)
+     ("_Snakemake" snakefmt)))
  '(gc-cons-threshold 104857600 nil nil "For better lsp-mode performance")
  '(global-flycheck-mode t)
  '(grep-command "grep --exclude-dir=.svn -nry")
@@ -63,6 +142,7 @@
  '(package-selected-packages
    '(company-anaconda anaconda-mode company company-auctex guess-tex-master vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auctex))
  '(pdf-view-display-size 'fit-page)
+ '(python-shell-interpreter "python")
  '(reftex-ref-style-default-list '("Default" "Cleveref"))
  '(size-indication-mode t)
  '(tab-always-indent nil)
@@ -193,6 +273,18 @@
 (use-package reftex-mode
   :hook LaTeX-mode)
 
+;; Python
+(use-package python
+  :bind
+  (("C-c C-b" . (lambda () (interactive) 
+                  (untabify (point-min) (point-max))
+                  (delete-trailing-whitespace)                  
+                  (format-all-buffer)))
+   :map python-mode-map
+   ("C-c C-c" . comment-or-uncomment-region))
+  :hook
+  ((python-mode . (lambda () (setq-local tab-width 4)))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Archive packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -227,7 +319,9 @@
 
 ;; format-all to beautify code
 (use-package format-all
-  :ensure t)
+  :ensure t
+  :hook
+  (python-mode . format-all-ensure-formatter))
 
 ;; company for auto-completion
 (use-package company
@@ -269,9 +363,9 @@
 ;; Anaconda (code documentation lookup for python)
 (use-package anaconda-mode
   :ensure t
-  :hook python-mode)
+  :hook ((python-mode . anaconda-mode)
+         (python-mode . anaconda-eldoc-mode)))
 
 ;; Company-Anaconda (auto-completion for python)
 (use-package company-anaconda
-  :ensure t
-  :hook (python-mode . anaconda-eldoc-mode))
+  :ensure t)
