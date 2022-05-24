@@ -47,11 +47,11 @@
  '(native-comp-async-query-on-exit t)
  '(native-comp-speed 3)
  '(package-archive-priorities
-   '(("local" . 1337)
-     ("MELPA" . 666)
-     ("gnu" . 420)
-     ("nongnu" . 69)
-     ("MELPA Stable" . 42)))
+   '(("MELPA" . 1337)
+     ("gnu" . 666)
+     ("nongnu" . 420)
+     ("MELPA Stable" . 69)
+     ("local" . 42)))
  '(package-archive-upload-base "~/.lisp/archive")
  '(package-archives
    '(("local" . "~/.lisp/archive")
@@ -129,7 +129,6 @@
 
 ;; Package manager
 (require 'package)
-(package-initialize)
 
 ;; Use-package manual installation
 (unless (package-installed-p 'use-package)
@@ -189,6 +188,10 @@
 ;; Enable line numbers
 (use-package display-line-numbers-mode
   :hook (prog-mode text-mode))
+
+;; RefTeX
+(use-package reftex-mode
+  :hook LaTeX-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Archive packages
@@ -257,9 +260,6 @@
         ("C-c C-c" . comment-or-uncomment-region))
   :init
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
-(use-package reftex-mode
-  :ensure auctex
-  :hook LaTeX-mode)
 
 ;; Auto-complete for auctex
 (use-package company-auctex
