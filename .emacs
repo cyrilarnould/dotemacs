@@ -364,7 +364,9 @@
 (use-package anaconda-mode
   :ensure t
   :hook ((python-mode . anaconda-mode)
-         (python-mode . anaconda-eldoc-mode)))
+         (python-mode . anaconda-eldoc-mode))
+  :config
+  (setq confirm-kill-processes nil))
 
 ;; Company-Anaconda (auto-completion for python)
 (use-package company-anaconda
