@@ -24,6 +24,7 @@
    '(company-bbdb company-semantic company-cmake company-capf company-clang company-files
                   (company-dabbrev-code company-gtags company-etags company-keywords)
                   company-oddmuse company-dabbrev company-anaconda))
+ '(company-dabbrev-downcase nil)
  '(company-idle-delay 0.0)
  '(company-require-match nil)
  '(company-tng-mode t)
@@ -140,7 +141,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
  '(package-native-compile t)
  '(package-selected-packages
-   '(electric-operator company-anaconda anaconda-mode company company-auctex guess-tex-master vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auctex))
+   '(powershell electric-operator company-anaconda anaconda-mode company company-auctex guess-tex-master vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auctex))
  '(pdf-view-display-size 'fit-page)
  '(python-shell-interpreter "python")
  '(reftex-ref-style-default-list '("Default" "Cleveref"))
@@ -376,3 +377,7 @@
 (use-package electric-operator
   :ensure t
   :hook (python-mode . electric-operator-mode))
+
+;; Company-Anaconda (auto-completion for python)
+(use-package powershell
+  :ensure t)
