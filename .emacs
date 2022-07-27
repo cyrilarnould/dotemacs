@@ -31,6 +31,7 @@
  '(cua-mode t nil (cua-base))
  '(eldoc-idle-delay 0)
  '(fit-window-to-buffer-horizontally t)
+ '(flycheck-disabled-checkers '(c/c++-clang))
  '(flycheck-global-modes '(not nxml-mode))
  '(flycheck-python-pylint-executable "python")
  '(flyspell-issue-message-flag nil)
@@ -350,7 +351,10 @@
   :bind
   (:map LaTeX-mode-map
         ("C-c b" . TeX-command-buffer)              
-        ("C-c C-b" . align-current)
+        ("C-c C-b" . (lambda () (interactive)
+                       (untabify (point-min) (point-max))
+                       (delete-trailing-whitespace)
+                       (align-current)))
         ("C-c c" . TeX-command-master)              
         ("C-c C-c" . comment-or-uncomment-region))
   :init
