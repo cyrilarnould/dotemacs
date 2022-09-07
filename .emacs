@@ -190,7 +190,7 @@
 (put 'downcase-region 'disabled nil)
 
 ;; Add shortcut for find-file-at-point
-(global-set-key (kbd "C-x f") 'find-file-at-point) 
+(global-set-key (kbd "C-x f") 'find-file-at-point)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Environment variables
@@ -237,13 +237,13 @@
 
 ;; XML Mode
 (use-package nxml-mode
-  :bind (("C-c C-c" . comment-or-uncomment-region)
+  :bind (("C-c C-c C-c" . comment-or-uncomment-region)
          :map nxml-mode-map
          ("C-c C-b" . format-all-buffer)))
 
 ;; HTML Mode
 (use-package mhtml-mode
-  :bind (("C-c C-c" . comment-or-uncomment-region)
+  :bind (("C-c C-c C-c" . comment-or-uncomment-region)
          :map mhtml-mode-map
          ("C-c C-b" . format-all-buffer)))
 
@@ -258,7 +258,7 @@
          ("C-c s a" . hs-show-all)
          ("C-c s b" . hs-show-block))
   :hook (nxml-mode mhtml-mode))
-  
+
 ;; Truncate-lines for XML/HTML
 (use-package toggle-truncate-lines
   :hook (nxml-mode mhtml-mode))
@@ -278,9 +278,9 @@
 ;; Python
 (use-package python
   :bind
-  (("C-c C-b" . (lambda () (interactive) 
+  (("C-c C-b" . (lambda () (interactive)
                   (untabify (point-min) (point-max))
-                  (delete-trailing-whitespace)                  
+                  (delete-trailing-whitespace)
                   (format-all-buffer)))
    :map python-mode-map
    ("C-c C-c" . comment-or-uncomment-region))
@@ -350,12 +350,12 @@
   :ensure auctex
   :bind
   (:map LaTeX-mode-map
-        ("C-c b" . TeX-command-buffer)              
+        ("C-c b" . TeX-command-buffer)
         ("C-c C-b" . (lambda () (interactive)
                        (untabify (point-min) (point-max))
                        (delete-trailing-whitespace)
                        (align-current)))
-        ("C-c c" . TeX-command-master)              
+        ("C-c c" . TeX-command-master)
         ("C-c C-c" . comment-or-uncomment-region))
   :init
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
