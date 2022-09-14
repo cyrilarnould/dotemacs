@@ -259,9 +259,12 @@
          ("C-c s b" . hs-show-block))
   :hook (nxml-mode mhtml-mode))
 
-;; Truncate-lines for XML/HTML
-(use-package toggle-truncate-lines
-  :hook (nxml-mode mhtml-mode))
+;; Truncate-lines in nxml-mode/mhtml-mode. Globally enabled, but
+;; visual-line-mode from the text-mode hook turns it off again. Turn
+;; it back on here.
+(use-package simple
+  :hook ((nxml-mode . toggle-truncate-lines)
+         (mhtml-mode . toggle-truncate-lines)))
 
 ;; Enable flyspell for latex mode
 (use-package flyspell
