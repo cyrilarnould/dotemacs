@@ -1,11 +1,13 @@
 (1
  (py-prof .
-          [(0 1)
+          [(0 2)
            ((dash
              (0))
             (s
              (0))
             (ctable
+             (0))
+            (f
              (0)))
            "Easily observe python cProfile output" single
            ((:authors
