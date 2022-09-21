@@ -1,4 +1,18 @@
 (1
+ (py-prof .
+          [(0 1)
+           ((dash
+             (0))
+            (s
+             (0))
+            (ctable
+             (0)))
+           "Easily observe python cProfile output" single
+           ((:authors
+             ("G. Bocci" . "boccigionata@gmail.com"))
+            (:maintainer "G. Bocci" . "boccigionata@gmail.com")
+            (:keywords "python" "cprofile" "profiling")
+            (:url . "https://github.com/GioBo/py-prof/"))])
  (guess-tex-master .
                    [(0 4)
                     nil "Guess LaTeX Master File" single
