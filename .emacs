@@ -32,6 +32,7 @@
  '(eldoc-idle-delay 0)
  '(fit-window-to-buffer-horizontally t)
  '(flycheck-disabled-checkers '(c/c++-clang))
+ '(flycheck-emacs-lisp-load-path 'inherit)
  '(flycheck-global-modes '(not nxml-mode))
  '(flycheck-python-pylint-executable "python")
  '(flyspell-issue-message-flag nil)
@@ -237,21 +238,22 @@
 
 ;; XML Mode
 (use-package nxml-mode
-  :bind (("C-c C-c C-c" . comment-or-uncomment-region)
-         :map nxml-mode-map
-         ("C-c C-b" . format-all-buffer)))
+  :bind (:map nxml-mode-map
+              ("C-c C-c C-c" . comment-or-uncomment-region)
+              ("C-c C-b" . format-all-buffer)))
 
 ;; HTML Mode
 (use-package mhtml-mode
-  :bind (("C-c C-c C-c" . comment-or-uncomment-region)
-         :map mhtml-mode-map
-         ("C-c C-b" . format-all-buffer)))
+  :bind (:map mhtml-mode-map
+              ("C-c C-c C-c" . comment-or-uncomment-region)
+              ("C-c C-b" . format-all-buffer)))
 
 ;; hideshow for xml/html
 (use-package hs-minor-mode
   :init (add-to-list 'hs-special-modes-alist
                      '(nxml-mode "<!--\\|<[^/>]*[^/]>" "-->\\|</[^/>]*[^/]>" "<!--" nil nil))
-  :bind (("C-c h t" . hs-toggle-hiding)
+  :bind (:map hs-minor-mode-map
+         ("C-c h t" . hs-toggle-hiding)
          ("C-c h a" . hs-hide-all)
          ("C-c h b" . hs-hide-block)
          ("C-c h l" . hs-hide-level)
@@ -280,13 +282,12 @@
 
 ;; Python
 (use-package python
-  :bind
-  (("C-c C-b" . (lambda () (interactive)
-                  (untabify (point-min) (point-max))
-                  (delete-trailing-whitespace)
-                  (format-all-buffer)))
-   :map python-mode-map
-   ("C-c C-c" . comment-or-uncomment-region))
+  :bind  (:map python-mode-map
+               ("C-c C-b" . (lambda () (interactive)
+                              (untabify (point-min) (point-max))
+                              (delete-trailing-whitespace)
+                              (format-all-buffer)))
+               ("C-c C-c" . comment-or-uncomment-region))
   :hook
   ((python-mode . (lambda () (setq-local tab-width 4)))))
 
