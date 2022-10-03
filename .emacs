@@ -145,7 +145,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
  '(package-native-compile t)
  '(package-selected-packages
-   '(csv-mode py-prof powershell electric-operator company-anaconda anaconda-mode company company-auctex guess-tex-master vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auctex))
+   '(xkcd csv-mode py-prof powershell electric-operator company-anaconda anaconda-mode company company-auctex guess-tex-master vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auctex))
  '(pdf-view-display-size 'fit-page)
  '(python-shell-interpreter "python")
  '(reftex-ref-style-default-list '("Default" "Cleveref"))
@@ -403,3 +403,7 @@
   :ensure t
   :mode ("\\.wsv\\'")
   :hook (csv-mode . csv-align-mode))
+
+;; Relevant
+(use-package xkcd
+  :ensure t)
