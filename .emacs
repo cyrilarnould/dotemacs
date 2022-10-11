@@ -402,7 +402,9 @@
 (use-package csv-mode
   :ensure t
   :mode ("\\.wsv\\'")
-  :hook (csv-mode . csv-align-mode))
+  :hook ((csv-mode . csv-align-mode)
+         (csv-mode . (lambda ()
+                       (display-line-numbers-mode 0)))))
 
 ;; Relevant
 (use-package xkcd
