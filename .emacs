@@ -126,6 +126,7 @@
  '(inhibit-startup-screen t)
  '(lsp-headerline-breadcrumb-enable nil)
  '(lsp-keymap-prefix "C-l")
+ '(mouse-wheel-scroll-amount-horizontal 5)
  '(native-comp-always-compile t)
  '(native-comp-async-jobs-number 8 nil nil "Will cause 'too many open files' error but simply reopen emacs to recompile")
  '(native-comp-async-query-on-exit t)
