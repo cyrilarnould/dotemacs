@@ -118,6 +118,7 @@
      ("_Snakemake" snakefmt)))
  '(gc-cons-threshold 104857600 nil nil "For better lsp-mode performance")
  '(global-flycheck-mode t)
+ '(global-so-long-mode t)
  '(grep-command "grep --exclude-dir=.svn -nry")
  '(grep-use-null-device nil)
  '(guess-TeX-master-from-files-depth 2)
@@ -146,7 +147,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
  '(package-native-compile t)
  '(package-selected-packages
-   '(xkcd csv-mode py-prof powershell electric-operator company-anaconda anaconda-mode company company-auctex guess-tex-master vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auctex))
+   '(clippy xkcd csv-mode py-prof powershell electric-operator company-anaconda anaconda-mode company company-auctex guess-tex-master vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auctex))
  '(pdf-view-display-size 'fit-page)
  '(python-shell-interpreter "python")
  '(reftex-ref-style-default-list '("Default" "Cleveref"))
@@ -409,4 +410,7 @@
 
 ;; Relevant
 (use-package xkcd
+  :ensure t)
+
+(use-package clippy
   :ensure t)
