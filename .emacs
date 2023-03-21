@@ -209,6 +209,16 @@
 (setenv "LSP_USE_PLISTS" "t")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Custom functions
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Custom function to update flycheck-ghdl-workdir variable
+(defun my-flycheck-ghdl-workdir-update (&rest _args)
+  (setq flycheck-ghdl-workdir
+        (concat
+         (vhdl-compile-directory)
+         (vhdl-work-library))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Package management
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Add path to locally downloaded packages
@@ -295,6 +305,13 @@
                ("C-c C-c" . comment-or-uncomment-region))
   :hook
   ((python-mode . (lambda () (setq-local tab-width 4)))))
+
+;; VHDL-mode
+(use-package vhdl-mode
+  :config
+  (advice-add 'vhdl-set-project :after #'my-flycheck-ghdl-workdir-update)
+  :hook
+  (vhdl-mode . my-flycheck-ghdl-workdir-update))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Archive packages
