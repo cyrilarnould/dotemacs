@@ -310,6 +310,7 @@
 (use-package vhdl-mode
   :config
   (advice-add 'vhdl-set-project :after #'my-flycheck-ghdl-workdir-update)
+  (advice-add 'vhdl-autoload-project :after #'my-flycheck-ghdl-workdir-update)
   :hook
   (vhdl-mode . my-flycheck-ghdl-workdir-update))
 
