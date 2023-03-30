@@ -385,6 +385,13 @@ Overrides local variable `indent-tabs-mode'."
      nil "mkdir \\1" "./" "work/" "Makefile" "xilinx"
      ("^ERROR:HDLParsers:[0-9]+ - \"\\([^ \t\n]+\\)\" Line \\([0-9]+\\)\\." 1 2 nil) ("" 0)
      nil)
+    ;; Xilinx Vivado:
+    ;; ERROR: [VRFC 10-1412] syntax error near o_idle [test.vhd:23]
+    ("Xilinx Vivado" "xvhdl" "" "make" "-f \\1"
+     nil "mkdir \\1" "./" "work" "Makefile" "vivado"
+     ("^ERROR: \\(.+\\) \\[\\([^ \t\n]+\\):\\([0-9]+\\)\\]" 2 3 nil) ("" 0)
+     ("\\1/entity" "\\2/\\1" "\\1/configuration"
+      "\\1/package" "\\1/body" downcase))
     )
   "List of available VHDL compilers and their properties.
 Each list entry specifies the following items for a compiler:
