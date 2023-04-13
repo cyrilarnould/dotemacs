@@ -35,6 +35,7 @@
  '(fit-window-to-buffer-horizontally t)
  '(flycheck-disabled-checkers '(c/c++-clang))
  '(flycheck-emacs-lisp-load-path 'inherit)
+ '(flycheck-ghdl-ieee-library "synopsys")
  '(flycheck-global-modes '(not nxml-mode))
  '(flycheck-python-pylint-executable "python")
  '(flyspell-issue-message-flag nil)
