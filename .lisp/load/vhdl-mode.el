@@ -286,7 +286,7 @@ Overrides local variable `indent-tabs-mode'."
     ;;    counter_rtl.vhd(29):Conditional signal assignment line__29
     ("ModelSim" "vcom" "-93 -work \\1" "make" "-f \\1"
      nil "vlib \\1; vmap \\2 \\1" "./" "work/" "Makefile" "modelsim"
-     ("^\\(ERROR\\|WARNING\\|\\*\\* Error\\|\\*\\* Warning\\)[^:]*:\\( *\\[[0-9]+]\\| ([^)]+)\\)? \\([^ \t\n]+\\)(\\([0-9]+\\)):" 3 4 nil)
+     ("^\\(?:\\(?1:ERROR\\|\\*\\* Error\\)\\|\\(?2:WARNING\\|\\*\\* Warning\\)\\|\\(?3:NOTE\\|\\*\\* Note\\)\\)[^:]*:\\( *\\[[0-9]+]\\| ([^)]+)\\)? \\(?4:[^ \t\n]+\\)(\\(?5:[0-9]+\\)):" 4 5 nil (2 . 3))
      ("" 0)
      ("\\1/_primary.dat" "\\2/\\1.dat" "\\1/_primary.dat"
       "\\1/_primary.dat" "\\1/body.dat" downcase))
@@ -389,7 +389,7 @@ Overrides local variable `indent-tabs-mode'."
     ;; ERROR: [VRFC 10-1412] syntax error near o_idle [test.vhd:23]
     ("Xilinx Vivado" "xvhdl" "" "make" "-f \\1"
      nil "mkdir \\1" "./" "work" "Makefile" "vivado"
-     ("^\\(ERROR\\|WARNING\\): \\(.+\\) \\[\\([^ \t\n]+\\):\\([0-9]+\\)\\]" 3 4 nil) ("" 0)
+     ("^\\(?:\\(?1:ERROR\\)\\|\\(?2:WARNING\\)\\|\\(?3:INFO\\)\\): \\(.+\\) \\[\\(?4:[^ \t\n]+\\):\\(?5:[0-9]+\\)\\]" 4 5 nil (2 . 3)) ("" 0)
      ("\\1/entity" "\\2/\\1" "\\1/configuration"
       "\\1/package" "\\1/body" downcase))
     )
