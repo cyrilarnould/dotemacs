@@ -224,6 +224,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Add path to locally downloaded packages
 (add-to-list 'load-path "~/.lisp/load")
+(byte-recompile-directory "~/.lisp/load" 0)
 
 ;; Package manager
 (require 'package)
