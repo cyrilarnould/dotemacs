@@ -494,7 +494,7 @@ NOTE: Activate new error and file message regexps and reflect the new setting
 			    (choice  :tag "Type    "
 			      (const :tag "Info" 0)
 			      (const :tag "Warning" 1)
-			      (const :tag "Error" nil)
+			      (const :tag "Error" 2)
 			      (sexp :tag "(WARNING . INFO)")))
 		(list :tag "File message" :indent 4
 		      (regexp  :tag "Regexp           ")
