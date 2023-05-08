@@ -491,7 +491,7 @@
 ;; csv-mode
 (use-package csv-mode
   :ensure t
-  :mode ("\\.wsv\\'")
+  :mode ("\\.wsv\\'" "\\.p3d\\'" "\\.h3d\\'" "\\.w3d\\'")
   :hook ((csv-mode . csv-align-mode)
          (csv-mode . (lambda ()
                        (display-line-numbers-mode 0)))))
