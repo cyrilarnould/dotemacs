@@ -135,7 +135,7 @@
  '(magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
  '(mouse-wheel-scroll-amount-horizontal 5)
  '(native-comp-always-compile t)
- '(native-comp-async-jobs-number 8 nil nil "Will cause 'too many open files' error but simply reopen emacs to recompile")
+ '(native-comp-async-jobs-number 20 nil nil "Will cause 'too many open files' error but simply reopen emacs to recompile")
  '(native-comp-async-query-on-exit t)
  '(native-comp-speed 3)
  '(package-archive-priorities
