@@ -167,10 +167,15 @@
  '(truncate-lines t)
  '(use-package-always-defer t)
  '(user-full-name "Cyril Arnould")
- '(user-mail-address "cyril.arnould@outlook.com")
+ '(user-mail-address "arnould@photonfocus.com")
  '(vhdl-clock-edge-condition 'function)
+ '(vhdl-company-name "Photonfocus")
  '(vhdl-compiler "GHDL")
  '(vhdl-electric-mode t)
+ '(vhdl-file-header
+   "-------------------------------------------------------------------------------\12--  P H O T O N F O C U S  C O M P A N Y  R E S T R I C T E D\12--\12--  Copyright (c) by\12--     Photonfocus\12--     CH-8853 Lachen, Switzerland\12--     info@photonfocus.com\12--\12--     All rights reserved. Reproduction in whole or in part is prohibited\12--     without the written permission of the copyright owner.\12--\12------------------------------------------------------------------------------\12-- Title      : <title string>\12-- Project    : <project string>\12-------------------------------------------------------------------------------\12-- File       : <filename>\12-- Author     : <author>\12-------------------------------------------------------------------------------\12-- Description:\12-- Constraints:\12-- Limitations:\12-- Notes      :\12-------------------------------------------------------------------------------\12\12")
+ '(vhdl-project-file-name
+   '("../../../\\1.prj" "\\1.prj" "../\\1.prj" "../../\\1.prj" "../../../../\\1.prj" "../../../../../\\1.prj" "../../../../../../\\1.prj" "../../../../../../../\\1.prj"))
  '(vhdl-reset-active-high t)
  '(vhdl-stutter-mode t)
  '(vhdl-use-direct-instantiation 'never))
