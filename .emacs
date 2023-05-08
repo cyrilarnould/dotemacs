@@ -221,6 +221,20 @@
 (setenv "LANG" "en_GB")
 ;; Set LSP_USE_PLISTS
 (setenv "LSP_USE_PLISTS" "t")
+;; Add 7-zip to path
+(setenv "PATH" (concat "c:/Program Files/7-Zip;" (getenv "PATH")))
+(setq exec-path (cons "c:/Program Files/7-Zip/" exec-path))
+;; Add modelsim to path
+(setenv "PATH" (concat "c:/EDA/modeltech_pe_10.5d/win32pe;" (getenv "PATH")))
+(setq exec-path (cons "c:/EDA/modeltech_pe_10.5d/win32pe/" exec-path))
+;; Add Python/Scripts to path
+(setenv "PATH" (concat "c:/SW/Python312/Scripts;" (getenv "PATH")))
+(setq exec-path (cons "c:/SW/Python312/Scripts/" exec-path))
+(setenv "PATH" (concat "c:/SW/Python312;" (getenv "PATH")))
+(setq exec-path (cons "c:/SW/Python312/" exec-path))
+(setenv "PYTHONPATH" (concat "c:/EDA/scripts/Packages312;" (getenv "PYTHONPATH")))
+;; Tidy config
+(setenv "HTML_TIDY" "~/.tidy_config")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Custom functions
