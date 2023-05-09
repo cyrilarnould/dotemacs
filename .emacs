@@ -316,6 +316,11 @@
   :hook
   (vhdl-mode . my-flycheck-ghdl-workdir-update))
 
+;; Align
+(use-package align
+  :config
+  (delq (assq 'tex-record-break align-rules-list) align-rules-list))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Archive packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
