@@ -17,7 +17,7 @@ pacman -S \
        mingw-w64-ucrt-x86_64-python-numpy
 # Install emacs packages
 pacman -S \
-       mingw-w64-ucrt-x86_64-emacs \      
+       mingw-w64-ucrt-x86_64-emacs \
        mingw-w64-ucrt-x86_64-grep \
        mingw-w64-ucrt-x86_64-diffutils \
        mingw-w64-ucrt-x86_64-ghdl-llvm \
@@ -27,7 +27,7 @@ pacman -S \
        mingw-w64-ucrt-x86_64-emacs-pdf-tools-server \
        mingw-w64-ucrt-x86_64-hunspell \
        mingw-w64-ucrt-x86_64-hunspell-en \
-       mingw-w64-ucrt-x86_64-python-pylint 
+       mingw-w64-ucrt-x86_64-python-pylint
 # Install miscellaneous packages
 pacman -S \
        mingw-w64-ucrt-x86_64-gnuplot
