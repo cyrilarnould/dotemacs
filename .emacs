@@ -321,6 +321,11 @@
   :config
   (delq (assq 'tex-record-break align-rules-list) align-rules-list))
 
+;; sh-script
+(use-package sh-script
+  :config
+  (setq sh-basic-offset tab-width))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Archive packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
