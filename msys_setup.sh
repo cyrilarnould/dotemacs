@@ -4,9 +4,8 @@ pacman -Su
 # Install msys packages
 pacman -S \
        base-devel \
-       dejagnu \
-       git \
-       vim
+       pactoys \
+       git
 # Install development packages
 pacman -S \
        mingw-w64-ucrt-x86_64-make \
