@@ -148,7 +148,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
  '(package-native-compile t)
  '(package-selected-packages
-   '(clippy xkcd csv-mode py-prof powershell electric-operator company-anaconda anaconda-mode company company-auctex guess-tex-master vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auctex))
+   '(debbugs clippy xkcd csv-mode py-prof powershell electric-operator company-anaconda anaconda-mode company company-auctex guess-tex-master vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auctex))
  '(pdf-view-display-size 'fit-page)
  '(python-shell-interpreter "python")
  '(reftex-ref-style-default-list '("Default" "Cleveref"))
@@ -437,6 +437,10 @@
   :hook ((csv-mode . csv-align-mode)
          (csv-mode . (lambda ()
                        (display-line-numbers-mode 0)))))
+
+;; Browse bugs
+(use-package debbugs
+  :ensure t)
 
 ;; Relevant
 (use-package xkcd
