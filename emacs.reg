@@ -2,8 +2,8 @@ Windows Registry Editor Version 5.00
 
 [HKEY_CLASSES_ROOT\*\shell\emacsopencurrentframe]
 @="&Open with Emacs"
-"icon"="C:\\msys64\\ucrt64\\bin\\emacsclientw.exe,0"
+"icon"="C:\\Program Files\\Emacs\\emacs-30.1\\bin\\emacsclientw.exe,0"
 
 [HKEY_CLASSES_ROOT\*\shell\emacsopencurrentframe\command]
-@="C:\\msys64\\ucrt64\\bin\\emacsclientw.exe -na runemacs.exe -c \"%1\""
+@="C:\\Program Files\\Emacs\\emacs-30.1\\bin\\emacsclientw.exe -na runemacs.exe -c \"%1\""
 
