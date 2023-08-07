@@ -227,12 +227,6 @@
 (byte-recompile-directory "~/.lisp/load" 0)
 
 ;; Package manager
-(require 'package)
-
-;; Use-package manual installation
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
 (require 'use-package)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
