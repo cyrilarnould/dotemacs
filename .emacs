@@ -296,8 +296,7 @@
 (use-package python
   :bind  (:map python-mode-map
                ("C-c C-b" . (lambda () (interactive)
-                              (untabify (point-min) (point-max))
-                              (delete-trailing-whitespace)
+                              (whitespace-cleanup)
                               (format-all-buffer)))
                ("C-c C-c" . comment-or-uncomment-region))
   :hook
@@ -386,8 +385,7 @@
   (:map LaTeX-mode-map
         ("C-c b" . TeX-command-buffer)
         ("C-c C-b" . (lambda () (interactive)
-                       (untabify (point-min) (point-max))
-                       (delete-trailing-whitespace)
+                       (whitespace-cleanup)
                        (align-current)))
         ("C-c c" . TeX-command-master)
         ("C-c C-c" . comment-or-uncomment-region))
