@@ -365,6 +365,11 @@
          (LaTeX-mode . company-mode))
   :config (company-tng-mode))
 
+;; magit
+(use-package magit
+  :ensure t
+  :init (setenv "SSH_ASKPASS" "git-gui--askpass"))
+
 ;; LSP mode
 (use-package lsp-mode
   :ensure t
