@@ -3,7 +3,7 @@
   autocrlf = false
   eol = lf
   fscache = true
-  editor = emacsclient -t -a=\\\"\\\"
+  editor = emacs
 [color]
   diff = auto
   status = auto
