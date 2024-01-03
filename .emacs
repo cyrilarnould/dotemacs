@@ -179,7 +179,8 @@
 ;;; Basic setup
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; start server
-(server-start)
+(require 'server)
+(unless (server-running-p) (server-start))
 
 ;;Increase the amount of data which Emacs reads from the process (for better lsp-mode performance)
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
