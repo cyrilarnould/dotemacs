@@ -3,7 +3,7 @@
   autocrlf = false
   eol = lf
   fscache = true
-  editor = emacs
+  editor = emacs -Q --eval (cua-mode)
 [color]
   diff = auto
   status = auto
