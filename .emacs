@@ -127,6 +127,7 @@
  '(guess-TeX-master-from-files-up 1)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
+ '(js-indent-level 2)
  '(lsp-headerline-breadcrumb-enable nil)
  '(lsp-keymap-prefix "C-l")
  '(mouse-wheel-scroll-amount-horizontal 5)
@@ -428,6 +429,19 @@
 (use-package py-prof
   :ensure t
   :hook python-mode)
+;; JSON Mode
+(use-package json-mode
+  :ensure t
+  :bind  (:map json-mode-map
+               ("C-c C-b" . json-mode-beautify)))
+
+(use-package yafolding
+  :ensure t
+  :bind  (:map yafolding-mode-map
+               ("C-c C-<return>" . yafolding-hide-parent-element)
+               ("C-c M-<return>" . yafolding-toggle-all)
+               ("C-c <return>" . yafolding-toggle-element))
+  :hook (json-mode . yafolding-mode))
 
 ;; csv-mode
 (use-package csv-mode
