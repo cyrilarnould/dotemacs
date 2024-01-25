@@ -3,12 +3,10 @@
   autocrlf = false
   eol = lf
   fscache = true
-  editor = emacs -Q --eval (cua-mode)
+  editor = emacs -Q --eval \\(cua-mode\\)
 [color]
-  diff = auto
-  status = auto
-  branch = auto
   interactive = true
+  ui = auto
 [help]
   format = html
 [diff "astextplain"]
@@ -24,3 +22,5 @@
   helper = helper-selector
 [safe]
   directory = *
+[protocol "file"]
+  allow = always
