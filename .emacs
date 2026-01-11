@@ -343,6 +343,12 @@
 (use-package guess-tex-master
   :ensure t)
 
+;; Multiple-Cursors
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C-<tab>" . mc/mark-next-like-this)
+         ("C-S-<tab>" . mc/unmark-next-like-this)))
+
 ;; Tabbar
 (use-package tabbar
   :ensure t
