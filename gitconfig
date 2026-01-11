@@ -24,3 +24,5 @@
   directory = *
 [protocol "file"]
   allow = always
+[submodule]
+	fetchJobs = 12
