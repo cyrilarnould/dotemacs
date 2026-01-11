@@ -132,6 +132,7 @@
  '(lsp-headerline-breadcrumb-enable nil)
  '(lsp-keymap-prefix "C-l")
  '(magit-clone-always-transient t)
+ '(magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
  '(mouse-wheel-scroll-amount-horizontal 5)
  '(native-comp-always-compile t)
  '(native-comp-async-jobs-number 8 nil nil "Will cause 'too many open files' error but simply reopen emacs to recompile")
