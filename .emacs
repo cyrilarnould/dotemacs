@@ -155,6 +155,7 @@
  '(pdf-view-display-size 'fit-page)
  '(python-shell-interpreter "python")
  '(reftex-ref-style-default-list '("Default" "Cleveref"))
+ '(savehist-mode t)
  '(size-indication-mode t)
  '(tab-always-indent nil)
  '(tab-width 2)
