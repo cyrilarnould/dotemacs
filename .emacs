@@ -30,7 +30,7 @@
  '(company-require-match nil)
  '(company-tng-mode t)
  '(csv-align-style 'auto)
- '(csv-separators '("," "\11" " "))
+ '(csv-separators '("," "\11" " " ";"))
  '(cua-mode t nil (cua-base))
  '(ediff-window-setup-function 'ediff-setup-windows-plain)
  '(eldoc-idle-delay 0)
