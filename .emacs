@@ -344,7 +344,9 @@
 
 ;; Tabbar
 (use-package tabbar
-  :ensure t)
+  :ensure t
+  :bind (("C-c C-p" . tabbar-backward)
+         ("C-c C-n" . tabbar-forward)))
 
 ;; View large files (vlf)
 (use-package vlf
