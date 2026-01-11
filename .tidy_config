@@ -1,0 +1,9 @@
+input-xml: yes
+fix-bad-comments:no
+fix-backslash:no
+wrap:0
+wrap-asp:no
+wrap-jste:no
+wrap-php:no
+write-back:yes
+force-output:yes
