@@ -121,8 +121,6 @@
  '(gc-cons-threshold 104857600 nil nil "For better lsp-mode performance")
  '(global-flycheck-mode t)
  '(global-so-long-mode t)
- '(grep-command "grep --exclude-dir=.svn -nry")
- '(grep-use-null-device nil)
  '(guess-TeX-master-from-files-depth 2)
  '(guess-TeX-master-from-files-up 1)
  '(ido-mode 'both nil (ido))
