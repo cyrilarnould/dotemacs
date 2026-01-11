@@ -125,6 +125,8 @@
  '(grep-use-null-device nil)
  '(guess-TeX-master-from-files-depth 2)
  '(guess-TeX-master-from-files-up 1)
+ '(ido-mode 'both nil (ido))
+ '(ido-use-filename-at-point 'guess)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(js-indent-level 2)
