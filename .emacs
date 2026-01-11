@@ -348,7 +348,9 @@
 
 ;; Yaml mode
 (use-package yaml-mode
-  :ensure t)
+  :ensure t
+  :bind  (:map yaml-mode-map
+               ("C-c C-b" . whitespace-cleanup)))
 
 ;; Flycheck
 (use-package flycheck
