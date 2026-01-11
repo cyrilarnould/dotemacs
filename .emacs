@@ -30,7 +30,7 @@
  '(company-require-match nil)
  '(company-tng-mode t)
  '(csv-align-style 'auto)
- '(csv-separators '("," "	" " "))
+ '(csv-separators '("," "\11" " "))
  '(cua-mode t nil (cua-base))
  '(eldoc-idle-delay 0)
  '(fit-window-to-buffer-horizontally t)
@@ -150,7 +150,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
  '(package-native-compile t)
  '(package-selected-packages
-   '(debbugs clippy xkcd csv-mode py-prof powershell electric-operator company-anaconda anaconda-mode company company-auctex guess-tex-master vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auctex))
+   '(yafolding json-mode magit debbugs clippy xkcd csv-mode py-prof powershell electric-operator company-anaconda anaconda-mode company company-auctex guess-tex-master vivado-mode multi-scratch use-package yaml-mode vlf tabbar pdf-tools lsp-mode format-all flycheck auctex))
  '(pdf-view-display-size 'fit-page)
  '(python-shell-interpreter "python")
  '(reftex-ref-style-default-list '("Default" "Cleveref"))
