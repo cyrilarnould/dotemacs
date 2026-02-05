@@ -334,13 +334,12 @@
 (use-package multi-scratch
   :ensure t)
 
-;; Vivado Mode
-(use-package vivado-mode
-  :ensure t
-  :mode "\\.xdc\\'")
-
 ;; Guess TeX master for auctex
 (use-package guess-tex-master
+  :ensure t)
+
+;; FPGA package
+(use-package fpga
   :ensure t)
 
 ;; Multiple-Cursors
