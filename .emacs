@@ -227,6 +227,13 @@
          (vhdl-compile-directory)
          (vhdl-work-library))))
 
+;; Custom function to open sr-speedbar and set focus to it
+(defun my-sr-speedbar-toggle ()
+  (interactive)
+  (sr-speedbar-toggle)
+  (if (sr-speedbar-exist-p)
+      (sr-speedbar-select-window)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Package management
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -337,6 +344,11 @@
 ;; Guess TeX master for auctex
 (use-package guess-tex-master
   :ensure t)
+
+;; SR-speedbar
+(use-package sr-speedbar
+  :ensure t
+  :bind ("C-x 7" . my-sr-speedbar-toggle))
 
 ;; FPGA package
 (use-package fpga
